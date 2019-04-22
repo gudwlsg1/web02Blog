@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue
@@ -27,62 +28,6 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime modified;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getStroedPath() {
-        return stroedPath;
-    }
-
-    public void setStroedPath(String stroedPath) {
-        this.stroedPath = stroedPath;
-    }
-
-    public String getOriginalName() {
-        return originalName;
-    }
-
-    public void setOriginalName(String originalName) {
-        this.originalName = originalName;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(LocalDateTime modified) {
-        this.modified = modified;
-    }
-
     public Post(Post p){
         this.id = p.getId();
         this.userId = p.getUserId();
@@ -91,9 +36,5 @@ public class Post {
         this.originalName = p.getOriginalName();
         this.created = p.getCreated();
         this.modified = p.getModified();
-    }
-
-    public Post(){
-
     }
 }

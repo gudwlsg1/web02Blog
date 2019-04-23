@@ -4,6 +4,7 @@ import kr.hs.dgsw.web02blog.Domain.Attachment;
 import kr.hs.dgsw.web02blog.Domain.Post;
 import kr.hs.dgsw.web02blog.Domain.User;
 import kr.hs.dgsw.web02blog.Protocol.AttachmentProtocol;
+import kr.hs.dgsw.web02blog.Repository.AttachmentRepository;
 import kr.hs.dgsw.web02blog.Repository.PostRepository;
 import kr.hs.dgsw.web02blog.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class AttacementServiceImpl implements AttachmentService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private AttachmentRepository attachmentRepository;
 
 
     @Override
@@ -70,13 +74,7 @@ public class AttacementServiceImpl implements AttachmentService {
                 case "post" :
                     Post post = this.postRepository.findById(id).orElse(null);
 
-                    Attachment attachment = null;
-
-                    for (Attachment item: post.getPictures()) {
-                        if(item.getPostId() == id){
-                            attachment = item;
-                        }
-                    }
+                    Attachment attachment = this.attachmentRepository.findByPostId(id).get();
 
                     if(attachment != null) {
                         filepath = attachment.getStoredPath();

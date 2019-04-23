@@ -60,9 +60,9 @@ public class PostServiceImpl implements PostService {
     public Post editPost(Post post, Long id) {
         return this.postRepository.findById(id)
                 .map(f -> {
+                    f.setTitle(Optional.ofNullable(post.getTitle()).orElse(f.getContent()));
                     f.setContent(Optional.ofNullable(post.getContent()).orElse(f.getContent()));
-                    f.setOriginalName(Optional.ofNullable(post.getOriginalName()).orElse(f.getOriginalName()));
-                    f.setStroedPath(Optional.ofNullable(post.getStroedPath()).orElse(f.getStroedPath()));
+                    f.setPictures(post.getPictures().size() > 0 ? post.getPictures() : f.getPictures());
                     return this.postRepository.save(f);
                 }).orElse(null);
     }

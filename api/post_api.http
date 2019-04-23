@@ -20,9 +20,8 @@ Content-Type: application/json
 
 {
   "userId" : 1,
-  "content": "12342134",
-  "stroedPath" : null,
-  "originalName" : null
+  "title" : "aaa",
+  "content": "12342134"
 }
 
 ###

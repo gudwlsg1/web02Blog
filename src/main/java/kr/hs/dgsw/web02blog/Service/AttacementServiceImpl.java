@@ -1,5 +1,6 @@
 package kr.hs.dgsw.web02blog.Service;
 
+import kr.hs.dgsw.web02blog.Domain.Attachment;
 import kr.hs.dgsw.web02blog.Domain.Post;
 import kr.hs.dgsw.web02blog.Domain.User;
 import kr.hs.dgsw.web02blog.Protocol.AttachmentProtocol;
@@ -18,6 +19,7 @@ import java.io.InputStream;
 import java.net.URLConnection;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -54,21 +56,30 @@ public class AttacementServiceImpl implements AttachmentService {
             String filepath = "";
             String filename = "";
 
+            Optional<Object> found = null;
+
             switch (type) {
                 case "user" :
                     User user = userRepository.findById(id).orElse(null);
 
                     if(user != null) {
-                        filename = user.getProfilePath();
+                        filepath = user.getProfilePath();
                     }
                     break;
 
                 case "post" :
                     Post post = this.postRepository.findById(id).orElse(null);
 
-                    if(post != null) {
-                        filepath = post.getStroedPath();
-                        filename = post.getOriginalName();
+                    Attachment attachment = null;
+
+                    for (Attachment item: post.getPictures()) {
+                        if(item.getPostId() == id){
+                            attachment = item;
+                        }
+                    }
+
+                    if(attachment != null) {
+                        filepath = attachment.getStoredPath();
                     }
                     break;
             }

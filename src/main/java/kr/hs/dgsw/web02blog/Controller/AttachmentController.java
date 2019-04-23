@@ -1,6 +1,8 @@
 package kr.hs.dgsw.web02blog.Controller;
 
 import kr.hs.dgsw.web02blog.Protocol.AttachmentProtocol;
+import kr.hs.dgsw.web02blog.Protocol.ResponseFormat;
+import kr.hs.dgsw.web02blog.Protocol.ResponseType;
 import kr.hs.dgsw.web02blog.Service.AttachmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +18,11 @@ public class AttachmentController {
     AttachmentService attachmentService;
 
     @PostMapping("/attachment")
-    public AttachmentProtocol upload(@RequestPart MultipartFile uploadFile){
-        return this.attachmentService.upload(uploadFile);
+    public ResponseFormat upload(@RequestPart MultipartFile uploadFile){
+        return new ResponseFormat(
+                ResponseType.ATTACHMENT_STORED,
+                this.attachmentService.upload(uploadFile)
+        );
     }
 
     @GetMapping("/attachment/{type}/{id}")

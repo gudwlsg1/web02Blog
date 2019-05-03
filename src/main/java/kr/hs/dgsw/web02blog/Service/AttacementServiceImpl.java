@@ -43,40 +43,39 @@ public class AttacementServiceImpl implements AttachmentService {
                 + UUID.randomUUID().toString() + "_"
                 + uploadFile.getOriginalFilename();
 
-        try{
+        try {
             File destFile = new File(destFilename);
             destFile.getParentFile().mkdirs();
             uploadFile.transferTo(destFile);
             return new AttachmentProtocol(destFilename, uploadFile.getOriginalFilename());
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     @Override
     public HttpServletResponse download(HttpServletResponse response, String type, long id) {
-        try
-        {
+        try {
             String filepath = "";
             String filename = "";
 
             Optional<Object> found = null;
 
             switch (type) {
-                case "user" :
+                case "user":
                     User user = userRepository.findById(id).orElse(null);
 
-                    if(user != null) {
+                    if (user != null) {
                         filepath = user.getProfilePath();
                     }
                     break;
 
-                case "post" :
+                case "post":
                     Post post = this.postRepository.findById(id).orElse(null);
 
                     Attachment attachment = this.attachmentRepository.findByPostId(id).get();
 
-                    if(attachment != null) {
+                    if (attachment != null) {
                         filepath = attachment.getStoredPath();
                     }
                     break;
@@ -84,19 +83,19 @@ public class AttacementServiceImpl implements AttachmentService {
 
 
             File file = new File(filepath);
-            if(!file.exists()) {
+            if (!file.exists()) {
                 return null;
             }
 
             String mimeType = URLConnection.guessContentTypeFromName(file.getName());
 
-            if(mimeType == null) {
+            if (mimeType == null) {
                 mimeType = "application/octet-stream";
             }
 
             response.setContentType(mimeType);
             response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
-            response.setContentLength((int)file.length());
+            response.setContentLength((int) file.length());
 
             InputStream is = null;
             is = new BufferedInputStream(new FileInputStream(file));

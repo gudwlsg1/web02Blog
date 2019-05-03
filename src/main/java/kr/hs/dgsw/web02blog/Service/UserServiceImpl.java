@@ -1,6 +1,8 @@
 package kr.hs.dgsw.web02blog.Service;
 
 import kr.hs.dgsw.web02blog.Domain.User;
+import kr.hs.dgsw.web02blog.Protocol.UserPostCountProtocol;
+import kr.hs.dgsw.web02blog.Repository.PostRepository;
 import kr.hs.dgsw.web02blog.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PostRepository postRepository;
 
     @Override
     public List<User> lstUser() {
@@ -40,10 +44,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean deleteUser(Long id) {
-        try{
+        try {
             this.userRepository.deleteById(id);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
@@ -51,5 +55,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(Long id) {
         return this.userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public UserPostCountProtocol login(User user) {
+        /*return this.userRepository.findByAccountAndUserPassword(user.getAccount(), user.getUserPassword())
+                .orElse(null);*/
+        User found = this.userRepository.findById(user.getId()).isPresent() ? this.userRepository.findById(user.getId()).get() : null;
+        Long count = this.postRepository.countAllByUserId(user.getId());
+        return new UserPostCountProtocol(found, count);
     }
 }

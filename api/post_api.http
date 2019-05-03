@@ -20,8 +20,8 @@ Content-Type: application/json
 
 {
   "userId" : 1,
-  "title" : "aaa",
-  "content": "12342134"
+  "title" : "제목2",
+  "content": "내용2"
 }
 
 ###

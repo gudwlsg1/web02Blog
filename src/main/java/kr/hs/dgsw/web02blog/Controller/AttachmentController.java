@@ -18,7 +18,7 @@ public class AttachmentController {
     AttachmentService attachmentService;
 
     @PostMapping("/attachment")
-    public ResponseFormat upload(@RequestPart MultipartFile uploadFile){
+    public ResponseFormat upload(@RequestPart MultipartFile uploadFile) {
         return new ResponseFormat(
                 ResponseType.ATTACHMENT_STORED,
                 this.attachmentService.upload(uploadFile)
@@ -26,7 +26,7 @@ public class AttachmentController {
     }
 
     @GetMapping("/attachment/{type}/{id}")
-    public void download(@PathVariable String type, @PathVariable long id, HttpServletRequest request, HttpServletResponse response){
+    public void download(@PathVariable String type, @PathVariable long id, HttpServletRequest request, HttpServletResponse response) {
         response = this.attachmentService.download(response, type, id);
     }
 }

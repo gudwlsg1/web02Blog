@@ -8,14 +8,14 @@ public class ResponseFormat {
     private String desc;
     private Object data;
 
-    public ResponseFormat(ResponseType responseType, Object data,Object option){
+    public ResponseFormat(ResponseType responseType, Object data, Object option) {
         this.code = responseType.code();
         this.desc = option instanceof Long || option instanceof String ?
-                    String.format(responseType.desc(), option) : responseType.desc();
+                String.format(responseType.desc(), option) : responseType.desc();
         this.data = data;
     }
 
-    public ResponseFormat(ResponseType responseType, Object data){
+    public ResponseFormat(ResponseType responseType, Object data) {
         this(responseType, data, null);
     }
 }

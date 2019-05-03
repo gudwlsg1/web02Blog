@@ -14,7 +14,7 @@ public class PostController {
     private PostService postService;
 
     @GetMapping("/post")
-    public ResponseFormat list(){
+    public ResponseFormat list() {
         return new ResponseFormat(
                 ResponseType.POST_GET,
                 this.postService.lstPost()
@@ -22,7 +22,7 @@ public class PostController {
     }
 
     @GetMapping("/post/{id}")
-    public ResponseFormat getPost(@PathVariable Long id){
+    public ResponseFormat getPost(@PathVariable Long id) {
         return new ResponseFormat(
                 ResponseType.POST_GET,
                 this.postService.getPost(id)
@@ -30,7 +30,7 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public ResponseFormat addPost(@RequestBody Post post){
+    public ResponseFormat addPost(@RequestBody Post post) {
         return new ResponseFormat(
                 ResponseType.POST_ADD,
                 this.postService.addPost(post)
@@ -38,7 +38,7 @@ public class PostController {
     }
 
     @PutMapping("/post/{id}")
-    public ResponseFormat editPost(@RequestBody Post post, @PathVariable Long id){
+    public ResponseFormat editPost(@RequestBody Post post, @PathVariable Long id) {
         return new ResponseFormat(
                 ResponseType.POST_UPDATE,
                 this.postService.editPost(post, id)
@@ -46,7 +46,7 @@ public class PostController {
     }
 
     @DeleteMapping("/post/{id}")
-    public ResponseFormat deletePost(@PathVariable Long id){
+    public ResponseFormat deletePost(@PathVariable Long id) {
         return new ResponseFormat(
                 ResponseType.POST_DELETE,
                 this.postService.deletePost(id)

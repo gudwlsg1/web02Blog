@@ -41,7 +41,7 @@ public class Post {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modified;
 
-    public Post(Post p){
+    public Post(Post p) {
         this.id = p.getId();
         this.userId = p.getUserId();
         this.title = p.getTitle();

@@ -14,11 +14,11 @@ POST http://localhost:8080/user
 Content-Type: application/json
 
 {
-  "account": "nqads78",
+  "account": "nqads789",
   "userPassword" : "1234",
   "name" : "HJ",
-  "email" : "test1@exam.com",
-  "phone" : "010-1000-0000",
+  "email" : "test12@exam.com",
+  "phone" : "011-1000-0000",
   "profilePath" : null
 }
 

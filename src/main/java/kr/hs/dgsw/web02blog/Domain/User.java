@@ -3,6 +3,7 @@ package kr.hs.dgsw.web02blog.Domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -30,12 +32,12 @@ public class User {
     private String userPassword;
 
     public void setUserPassword(String userPassword) {
-        try{
+        try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
             md.update(userPassword.getBytes(), 0, userPassword.length());
             this.userPassword = new BigInteger(1, md.digest()).toString(16);
 
-        } catch (NoSuchAlgorithmException ex){
+        } catch (NoSuchAlgorithmException ex) {
             Logger logger = LoggerFactory.getLogger(User.class);
             logger.warn(ex.getMessage());
         }
@@ -63,4 +65,15 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modified;
 
+    public User(User u) {
+        this.id = u.getId();
+        this.account = u.getAccount();
+        this.userPassword = u.getUserPassword();
+        this.name = u.getName();
+        this.email = u.getEmail();
+        this.phone = u.getPhone();
+        this.profilePath = u.getProfilePath();
+        this.joined = u.getJoined();
+        this.modified = u.getJoined();
+    }
 }

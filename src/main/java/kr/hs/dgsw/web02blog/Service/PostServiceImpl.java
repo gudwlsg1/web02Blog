@@ -8,9 +8,7 @@ import kr.hs.dgsw.web02blog.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -24,6 +22,18 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostUsernameProtocol> lstPost() {
         List<Post> lstPost = this.postRepository.findAll();
+
+
+        /*//오름차순
+        Collections.sort(lstPost, new Comparator<Post>(){
+            @Override
+            public int compare(Post p1, Post p2) {
+                return p1.getCreated().compareTo(p2.getCreated());
+            }
+        });
+        //반대로
+        Collections.reverse(lstPost);*/
+
         List<PostUsernameProtocol> lstPostUsernameProtocol = new ArrayList<>();
 
         lstPost.forEach(p -> {
@@ -35,20 +45,19 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostUsernameProtocol> getPost(Long id) {
-        Optional<User> found = this.userRepository.findById(id);
+    public PostUsernameProtocol getPost(Long id) {
+        Post post = this.postRepository.findById(id).get();
+
+        if(post == null){
+            return null;
+        }
+
+        Optional<User> found = this.userRepository.findById(post.getUserId());
         String name = found.isPresent() ? found.get().getName() : null;
 
-        List<Post> lstPost = this.postRepository.findAll();
-        List<PostUsernameProtocol> lstPostUsernameProtocol = new ArrayList<>();
+        PostUsernameProtocol postUsernameProtocol = new PostUsernameProtocol(post, name);
 
-        lstPost.forEach(p -> {
-            if(p.getId() == id){
-                lstPostUsernameProtocol.add(new PostUsernameProtocol(p, name));
-            }
-        });
-
-        return lstPostUsernameProtocol;
+        return postUsernameProtocol;
     }
 
     @Override
@@ -62,17 +71,17 @@ public class PostServiceImpl implements PostService {
                 .map(f -> {
                     f.setTitle(Optional.ofNullable(post.getTitle()).orElse(f.getContent()));
                     f.setContent(Optional.ofNullable(post.getContent()).orElse(f.getContent()));
-                    f.setPictures(post.getPictures().size() > 0 ? post.getPictures() : f.getPictures());
+                    //f.setPictures(post.getPictures().size() > 0 ? post.getPictures() : f.getPictures());
                     return this.postRepository.save(f);
                 }).orElse(null);
     }
 
     @Override
     public boolean deletePost(Long id) {
-        try{
+        try {
             this.postRepository.deleteById(id);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

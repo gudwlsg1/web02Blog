@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>블로그</title>
+    <script
+            src="http://code.jquery.com/jquery-3.4.0.min.js"
+            integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+            crossorigin="anonymous"></script>
+</head>
+<link href="style.css" rel="stylesheet"/>
+<body>
+    <header class="container">
+        DGSW
+    </header>
+    <aside id="leftAside" class="container">
+        <div style="text-align: center"><button style="background: gray" onclick="showPost()">새 글 쓰기</button></div>
+        <ul id="writingPost">
+        </ul>
+    </aside>
+    <section id="main-container" class="container">
+        <div id="main-content" class="content">
+           <div>
+               <h1 id="writingTitle"></h1>
+               <hr>
+               <div>
+                   <div id="writingName" style="display: inline-block"></div>
+                   <div id="writingTime" style="display: inline-block; position: absolute; right: 0px; margin-right: 5px;"></div>
+               </div>
+               <br>
+               <div id="writingContent" style="font-size: 24px; white-space: pre-wrap"></div>
+               <div style="margin: 20px 0px 10px 0px; text-align: center;">
+                   <button onclick="btnEdit(this)">수정</button> <button onclick="btnDelete(this)">삭제</button>
+               </div>
+           </div>
+        </div>
+
+        <div id="post-container" class="content" style="display: none;">
+            <div style="background-color: white;
+                        position: relative; height: 100%;
+                        padding: 10px;">
+                <div>
+                    <input id="inputTitle" placeholder="제목"
+                           style="width: 50%; height: 30px; font-size: 20px;"/>
+                    <img style="width: 6%; vertical-align: middle;" onclick="openFileDialog()"
+                         src="https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/75/bb/16/75bb16e0-c182-42e2-5cc5-58b65ba8282e/AppIcon-0-1x_U007emarketing-0-0-85-220-6.png/246x0w.jpg">
+                    <input id="uploadImg" type="file" style="display:none;"/>
+                </div>
+                <textarea id="inputContent" placeholder="내용" style="width: 80%; height: 80%" ></textarea>
+                <div style="margin: 30px 0 30px 0;">
+                    <button onclick="btnPost()">확인</button>
+                    <button onclick="btnCancle($('#post-container'))">취소</button>
+                </div>
+            </div>
+        </div>
+
+        <!--<div id="post-container" style="display: none; justify-content: center; align-items: center">
+            <div style="background-color: white;
+                        position: relative; width: 85%; height: 80%;">
+                <div style="margin-top: 10px;">
+                    <input placeholder="제목"
+                           style="width: 50%; height: 30px; font-size: 20px;"/>
+                    <img style="width: 6%; vertical-align: middle;" onclick="openFileDialog()"
+                         src="https://is2-ssl.mzstatic.com/image/thumb/Purple123/v4/75/bb/16/75bb16e0-c182-42e2-5cc5-58b65ba8282e/AppIcon-0-1x_U007emarketing-0-0-85-220-6.png/246x0w.jpg">
+                    <input id="uploadImg" type="file" style="display:none;" multiple/>
+                </div>
+                <textarea placeholder="내용" style="width: 80%; height: 80%" ></textarea>
+                <div style="margin: 30px 0 30px 0;">
+                    <button onclick="btnPost()">확인</button>
+                    <button onclick="btnCancle($('#post-container'))">취소</button>
+                </div>
+            </div>
+        </div>-->
+    </section>
+
+    <aside id="rightAside" class="container">
+    </aside>
+    <footer class="container footer">
+        Copyright 2019. 남형진
+    </footer>
+
+
+</body>
+</html>
+
+<script src="app.js"></script>

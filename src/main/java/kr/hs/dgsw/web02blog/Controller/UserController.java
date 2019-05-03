@@ -14,7 +14,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/user")
-    public ResponseFormat list(){
+    public ResponseFormat list() {
         return new ResponseFormat(
                 ResponseType.USER_GET,
                 this.userService.lstUser()
@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseFormat getUser(@PathVariable Long id){
+    public ResponseFormat getUser(@PathVariable Long id) {
         return new ResponseFormat(
                 ResponseType.USER_GET,
                 this.userService.getUser(id)
@@ -30,15 +30,24 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseFormat addUser(@RequestBody User user){
+    public ResponseFormat addUser(@RequestBody User user) {
         return new ResponseFormat(
                 ResponseType.USER_ADD,
                 this.userService.addUser(user)
         );
     }
 
+    @PostMapping("/user/login")
+    public ResponseFormat Login(@RequestBody User user){
+        ResponseFormat responseFormat = new ResponseFormat(
+                ResponseType.USER_LOGIN,
+                this.userService.login(user)
+        );
+        return responseFormat;
+    }
+
     @PutMapping("/user/{id}")
-    public ResponseFormat editUser(@RequestBody User user, @PathVariable Long id){
+    public ResponseFormat editUser(@RequestBody User user, @PathVariable Long id) {
         return new ResponseFormat(
                 ResponseType.USER_UPDATE,
                 this.userService.editUser(user, id)
@@ -46,10 +55,11 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{id}")
-    public ResponseFormat deleteUser(@PathVariable Long id){
+    public ResponseFormat deleteUser(@PathVariable Long id) {
         return new ResponseFormat(
                 ResponseType.USER_DELETE,
                 this.userService.deleteUser(id)
         );
     }
+
 }
